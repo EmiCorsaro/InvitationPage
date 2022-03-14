@@ -11,15 +11,15 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: NuGetToolInstaller@1
+  displayName: 'NuGet packages'
+
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk'
   inputs:
     packageType: 'sdk'
     version: '6.0.x'
     includePreviewVersions: true
-
-- task: NuGetToolInstaller@1
-  displayName: 'NuGet packages'
 
 - task: NuGetCommand@2
   displayName: 'Restore'
@@ -30,4 +30,16 @@ steps:
   displayName: 'Build of projects'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
+    projects: '**/InvitationPage-backend.csproj, **/InvitationPageModel.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build of tests'
+  inputs:
+    command: 'build'
+    projects: '**/*Tests.csproj'
+  
+- task: DotNetCoreCLI@2
+  displayName: 'Unit Tests'
+  inputs:
+    command: 'test'
+    projects: '**/*UnitTests.csproj'
