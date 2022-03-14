@@ -1,4 +1,6 @@
-﻿using InvitationPageModel.DataModels.Person;
+﻿using InvitationPageModel.DataModels.Interfaces.Family;
+using InvitationPageModel.DataModels.Models.Family;
+using InvitationPageModel.DataModels.Person;
 using InvitationPageModel.Responses.Interfaces;
 using InvitationPageModel.Responses.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +13,17 @@ namespace InvitationPage_backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Route("/Persons")]
-        public ActionResult<IResponse<Person>> GetPersons()
+        public ActionResult<IResponse<JsonResult>> GetPersons()
         {
-            return Ok(new ResponseData<Person>() { IsSuccess = true, Data = new Person() { FirstName="Tini", LastName="Hernandez", FamilyId=1 } });
+            
+            List<Person> persons = new List<Person>();
+            Person personRefered = new Person() { FirstName = "Tini", LastName = "Hernandez"};
+            Family family = new Family(personRefered);
+            family.AddMember(new Person() { FirstName = "Lucas", LastName = "Hernandez" });
+            family.AddMember(new Person() { FirstName = "Gustavo", LastName = "Hernandez" });
+
+
+            return Ok(new ResponseData<JsonResult>() { IsSuccess = true, Data = new JsonResult(family) });
         }
     }
 }

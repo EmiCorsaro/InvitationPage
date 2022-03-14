@@ -6,10 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="DataModels\Models\Family\**" />
-    <EmbeddedResource Remove="DataModels\Models\Family\**" />
-    <None Remove="DataModels\Models\Family\**" />
-  </ItemGroup>
-
 </Project>
