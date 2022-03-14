@@ -8,7 +8,7 @@ parameters:
 - name: projectFolder
   default: ' '
 - name: projectsToBuild
-  default: '**/InvitationPage-backend.csproj **/InvitationPageModel.csproj'
+  default: '**/InvitationPage[-backend|Model].csproj'
 - name: projectsToTest
   default: '**/*UnitTests.csproj'
 
