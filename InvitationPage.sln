@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvitationPage-backend", "InvitationPageAPI\InvitationPage-backend.csproj", "{2AD400D0-7344-42C7-9A0D-D683CCA2443B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{39E93DA9-14FC-4434-AD58-60BE25C85A71} = {39E93DA9-14FC-4434-AD58-60BE25C85A71}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvitationPageModel", "InvitationPageModel\InvitationPageModel.csproj", "{39E93DA9-14FC-4434-AD58-60BE25C85A71}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvitationPage-backend_UnitTests", "Tests\UnitTests\InvitationPage-backend_UnitTests\InvitationPage-backend_UnitTests.csproj", "{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B45BA54D-567E-4C4B-8F08-3B435BBA6E30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit Tests", "Unit Tests", "{F0B101EE-1B49-440C-A414-D88F89D35809}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvitationPageModel_UnitTests", "Tests\UnitTests\InvitationPageModel_UnitTests\InvitationPageModel_UnitTests.csproj", "{B9A96913-09DB-4D37-8D3B-720CA4BC25A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9303C0EB-8844-4DAE-B76B-6C68065354CB}"
+	ProjectSection(SolutionItems) = preProject
+		azure-pipelines.yml = azure-pipelines.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AD400D0-7344-42C7-9A0D-D683CCA2443B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD400D0-7344-42C7-9A0D-D683CCA2443B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD400D0-7344-42C7-9A0D-D683CCA2443B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD400D0-7344-42C7-9A0D-D683CCA2443B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39E93DA9-14FC-4434-AD58-60BE25C85A71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E93DA9-14FC-4434-AD58-60BE25C85A71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E93DA9-14FC-4434-AD58-60BE25C85A71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E93DA9-14FC-4434-AD58-60BE25C85A71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A96913-09DB-4D37-8D3B-720CA4BC25A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A96913-09DB-4D37-8D3B-720CA4BC25A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A96913-09DB-4D37-8D3B-720CA4BC25A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A96913-09DB-4D37-8D3B-720CA4BC25A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{924F42B2-A540-4CF6-B1D9-E8AFA6F5931C} = {F0B101EE-1B49-440C-A414-D88F89D35809}
+		{F0B101EE-1B49-440C-A414-D88F89D35809} = {B45BA54D-567E-4C4B-8F08-3B435BBA6E30}
+		{B9A96913-09DB-4D37-8D3B-720CA4BC25A5} = {F0B101EE-1B49-440C-A414-D88F89D35809}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7A096550-A31F-4F94-8545-8BB358FF79E9}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,37 @@
+# ASP.NET Core (.NET Framework)
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: 'App Build'
+  inputs:
+    command: 'build'
+    projects: '**/InvitationPage-backend.csproj **/InvitationPageModel.csproj'
+    testRunTitle: 'Build of application projects'
+
+- task: 'Tests Build'
+  inputs:
+    command: 'build'
+    projects: '**/*_UnitTests.csproj'
+    testRunTitle: 'Build of application tests'
+
+- task: 'Unit Tests'
+  inputs:
+    command: 'test'
+    projects: '**/*_UnitTests.csproj'
+    testRunTitle: 'Unit Tests'
+
