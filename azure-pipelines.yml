@@ -11,12 +11,23 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+    includePreviewVersions: true
+
 - task: NuGetToolInstaller@1
+  displayName: 'NuGet packages'
 
 - task: NuGetCommand@2
+  displayName: 'Restore'
   inputs:
     restoreSolution: '$(solution)'
+  
 - task: DotNetCoreCLI@2
+  displayName: 'Build of projects'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
