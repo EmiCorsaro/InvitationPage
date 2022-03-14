@@ -16,22 +16,7 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
-- task: 'App Build'
+- task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: '**/InvitationPage-backend.csproj **/InvitationPageModel.csproj'
-    testRunTitle: 'Build of application projects'
-
-- task: 'Tests Build'
-  inputs:
-    command: 'build'
-    projects: '**/*_UnitTests.csproj'
-    testRunTitle: 'Build of application tests'
-
-- task: 'Unit Tests'
-  inputs:
-    command: 'test'
-    projects: '**/*_UnitTests.csproj'
-    testRunTitle: 'Unit Tests'
-
+    projects: '**/*.csproj'
