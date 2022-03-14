@@ -8,6 +8,7 @@ namespace InvitationPageModel.DataModels.Interfaces.Person
 {
     public interface IPerson
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int FamilyId { get; set; }

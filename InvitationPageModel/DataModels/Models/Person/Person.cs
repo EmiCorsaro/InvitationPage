@@ -9,22 +9,26 @@ namespace InvitationPageModel.DataModels.Person
 {
     public class Person : IPerson
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int FamilyId { get; set; }
 
         public Person()
         {
-            FirstName = "UnknownFirtsName";
-            LastName = "UnknownLastName";
-            FamilyId = -1;
+            Random rnd = new Random();
+            Id = rnd.Next(1, 10);
+            FirstName = "Unknown FirstName";
+            LastName = "Unknown LastName";
+            FamilyId = rnd.Next(1, 10);
         }
 
-        public Person(string firstName, string lastName, int familyId)
+        public Person(string firstName, string lastName)
         {
+            Random rnd = new Random();
+            Id = rnd.Next(1, 10);
             FirstName = firstName;
             LastName = lastName;
-            FamilyId = familyId;
         }
     }
 }
