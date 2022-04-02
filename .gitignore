@@ -360,3 +360,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/InvitationPageAPI/Identity.db
+/InvitationPageAPI/Identity.db-shm
+/InvitationPageAPI/Identity.db-wal
