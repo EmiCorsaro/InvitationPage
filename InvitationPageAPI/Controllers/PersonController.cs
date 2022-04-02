@@ -28,5 +28,22 @@ namespace InvitationPage_backend.Controllers
 
             return Ok(new ResponseData<JsonResult>() { IsSuccess = true, Data = new JsonResult(family) });
         }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [Route("/Person")]
+        public ActionResult<IResponse<JsonResult>> GetPersonsByName([FromQuery] Person person)
+        {
+
+            List<Person> persons = new List<Person>();
+            Person personRefered = new Person() { FirstName = "Tini", LastName = "Hernandez" };
+            Family family = new Family(personRefered);
+            family.AddMember(new Person() { FirstName = "Lucas", LastName = "Hernandez" });
+            family.AddMember(new Person() { FirstName = "Gustavo", LastName = "Hernandez" });
+
+
+            return Ok(new ResponseData<JsonResult>() { IsSuccess = true, Data = new JsonResult(family.persons.Where(p => p.FirstName == person.FirstName || p.LastName == person.LastName))});
+        }
     }
 }
