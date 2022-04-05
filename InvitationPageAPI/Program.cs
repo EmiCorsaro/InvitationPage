@@ -1,5 +1,8 @@
+using InvitationPageModel;
 using InvitationPageModel.DataModels;
 using InvitationPageModel.DataModels.Models.User;
+using InvitationPageModel.Handlers.Interfaces;
+using InvitationPageModel.Handlers.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -9,11 +12,7 @@ using System.Text;
 using static InvitationPageModel.DataModels.MyDbContext;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services
-    .AddSqlite<MyDbContext>(builder.Configuration.GetConnectionString("Default"))
-    .AddIdentityCore<User>()
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<MyDbContext>();
+
 
 builder.Services
     .AddHttpContextAccessor()
@@ -34,14 +33,14 @@ builder.Services
     });
 
 // Add services to the container.
-
+builder.Services.setDBContext();
+builder.Services.AddInvitationModel();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
-app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> userManager) =>
+app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> userManager, IUserDbHandler userDbHandler) =>
 {
     // Verificamos credenciales con Identity
     var user = await userManager.FindByNameAsync(request.UserName);
@@ -51,7 +50,7 @@ app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> user
         return Results.Forbid();
     }
 
-    var roles = await userManager.GetRolesAsync(user);
+    var roles = userDbHandler.getRoles(user);
 
     // Generamos un token según los claims
     var claims = new List<Claim>
@@ -63,7 +62,7 @@ app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> user
 
     foreach (var role in roles)
     {
-        claims.Add(new Claim(ClaimTypes.Role, role));
+        claims.Add(new Claim(ClaimTypes.Role, role.Name));
     }
 
     var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]));
@@ -72,7 +71,7 @@ app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> user
         issuer: builder.Configuration["Jwt:Issuer"],
         audience: builder.Configuration["Jwt:Audience"],
         claims: claims,
-        expires: DateTime.Now.AddMinutes(720),
+        expires: DateTime.Now.AddMinutes(60),
         signingCredentials: credentials);
 
     var jwt = new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
@@ -83,46 +82,41 @@ app.MapPost("/token", async (AuthenticateRequest request, UserManager<User> user
     });
 });
 
-async Task SeedData()
-{
-    var scopeFactory = app!.Services.GetRequiredService<IServiceScopeFactory>();
-    using var scope = scopeFactory.CreateScope();
+//async Task SeedData()
+//{
+//    var scopeFactory = app!.Services.GetRequiredService<IServiceScopeFactory>();
+//    using var scope = scopeFactory.CreateScope();
 
-    var context = scope.ServiceProvider.GetRequiredService<MyDbContext>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+//    var context = scope.ServiceProvider.GetRequiredService<MyDbContext>();
+//    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+//    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+//    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
-    context.Database.EnsureCreated();
+//    context.Database.EnsureCreated();
 
-    if (!userManager.Users.Any())
-    {
-        logger.LogInformation("Creando usuario de prueba");
+//    if (!userManager.Users.Any())
+//    {
+//        logger.LogInformation("Creando usuario de prueba");
 
-        var newUser = new User
-        {
-            Email = "test@demo.com",
-            FirstName = "Test",
-            LastName = "User",
-            UserName = "test.demo"
-        };
+//        var newUser = new User
+//        {
+//            Email = "emii.corsaro@gmail.com",
+//            FirstName = "Emiliano",
+//            LastName = "Corsaro",
+//            UserName = "ecorsaro"
+//        };
 
-        await userManager.CreateAsync(newUser, "P@ss.W0rd");
-        await roleManager.CreateAsync(new IdentityRole
-        {
-            Name = "Admin"
-        });
-        await roleManager.CreateAsync(new IdentityRole
-        {
-            Name = "AnotherRole"
-        });
+//        await userManager.CreateAsync(newUser, "P@ss.W0rd");
+//        await roleManager.CreateAsync(new Role
+//        {
+//            Name = "Admin"
+//        });
 
-        await userManager.AddToRoleAsync(newUser, "Admin");
-        await userManager.AddToRoleAsync(newUser, "AnotherRole");
-    }
-}
+//        await userManager.AddToRoleAsync(newUser, "Admin");
+//    }
+//}
 
-await SeedData();
+//await SeedData();
 
 // Configure the HTTP request pipeline.
 
